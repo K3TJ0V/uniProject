@@ -1,0 +1,5 @@
+musi byc obiektowo,
+musi byc GUI
+musi byc baza
+
+na 1 zajecia - diagram klas
