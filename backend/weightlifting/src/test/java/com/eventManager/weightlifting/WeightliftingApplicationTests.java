@@ -1,10 +1,10 @@
-package com.playground.backend;
+package com.eventManager.weightlifting;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class WeightliftingApplicationTests {
 
 	@Test
 	void contextLoads() {
