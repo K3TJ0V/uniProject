@@ -1,0 +1,62 @@
+package com.eventManager.weightlifting.service;
+
+import com.eventManager.weightlifting.dto.request.JudgeRequest;
+import com.eventManager.weightlifting.dto.response.JudgeResponse;
+import com.eventManager.weightlifting.model.Judge;
+import com.eventManager.weightlifting.repo.JudgeRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class JudgeService {
+    private final JudgeRepo judgeRepo;
+
+    public List<Judge> getAll(){
+        return judgeRepo.findAll();
+    }
+
+    public JudgeResponse upsertJudge(JudgeRequest judgeData, UUID id){
+        Judge judge = new Judge();
+        if(id != null){
+            judge = judgeRepo.findById(id).orElse(new Judge());
+        }
+        judge.setLicenseNumber(judgeData.getLicenseNumber());
+        judge.setDateOfBirth(judgeData.getDateOfBirth());
+        judge.setFirstName(judgeData.getFirstName());
+        judge.setLastName(judgeData.getLastName());
+        
+        Judge savedEntity = judgeRepo.save(judge);
+
+        return JudgeResponse.builder()
+                .id(savedEntity.getId())
+                .firstName(savedEntity.getFirstName())
+                .lastname(savedEntity.getLastName())
+                .licenseNumber(savedEntity.getLicenseNumber())
+                .build();
+    }
+
+    public JudgeResponse getById(UUID id){
+        Judge judge = judgeRepo.findById(id)
+                .orElse(null);
+
+        if(judge != null){
+            return JudgeResponse.builder()
+                    .id(judge.getId())
+                    .firstName(judge.getFirstName())
+                    .lastname(judge.getLastName())
+                    .licenseNumber(judge.getLicenseNumber())
+                    .build();
+        }else{
+            return null;
+        }
+    }
+
+    public void deleteById(UUID id){
+        judgeRepo.findById(id).ifPresent(judgeRepo::delete);
+    }
+}
