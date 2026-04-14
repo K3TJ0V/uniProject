@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -16,8 +15,16 @@ import java.util.UUID;
 public class JudgeService {
     private final JudgeRepo judgeRepo;
 
-    public List<Judge> getAll(){
-        return judgeRepo.findAll();
+    public List<JudgeResponse> getAll(){
+        return judgeRepo.findAll().stream()
+                .map(judge -> {
+                    return JudgeResponse.builder()
+                            .id(judge.getId())
+                            .firstName(judge.getFirstName())
+                            .lastname(judge.getLastName())
+                            .licenseNumber(judge.getLicenseNumber())
+                            .build();
+                }).toList();
     }
 
     public JudgeResponse upsertJudge(JudgeRequest judgeData, UUID id){

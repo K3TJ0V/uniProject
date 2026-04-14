@@ -2,7 +2,6 @@ package com.eventManager.weightlifting.controller;
 
 import com.eventManager.weightlifting.dto.request.JudgeRequest;
 import com.eventManager.weightlifting.dto.response.JudgeResponse;
-import com.eventManager.weightlifting.model.Judge;
 import com.eventManager.weightlifting.service.JudgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +18,8 @@ public class JudgeController {
     private final JudgeService judgeService;
 
     @GetMapping
-    public ResponseEntity<List<Judge>> getAll(){
-        List<Judge> judgeList = judgeService.getAll();
+    public ResponseEntity<List<JudgeResponse>> getAll(){
+        List<JudgeResponse> judgeList = judgeService.getAll();
         return new ResponseEntity<>(judgeList, HttpStatus.OK);
     }
     @GetMapping("/{id}")

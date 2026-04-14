@@ -17,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Table(name = "competitor")
 public class Competitor extends Person{
+    private String ageCategory;
     private String weightCategory;
     @Column(nullable = false)
     private String gender;
