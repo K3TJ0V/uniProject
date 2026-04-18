@@ -1,0 +1,10 @@
+users component - caly CRUD, 3 tabele z dodawaniem wierszy, edycja kazdego pojedynczego, po prostu actions.
+
+home - jakis taki welcome screen
+
+alert component/service globalny
+
+dashboard - users/home
+- event creator (redirect na liste z highlightem dodanego)
+- event list - z linkiem na creator jak puste
+- event manager (to juz ogarnianie wydarzenia live)
