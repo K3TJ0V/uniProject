@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/competitor")
 public class CompetitorController {
     private final CompetitorService compService;
