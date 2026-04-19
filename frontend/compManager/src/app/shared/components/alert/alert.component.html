@@ -1,0 +1,16 @@
+<div class="alertContainer">
+    @for(item of values$ | async; track item.id){
+        <div class="alertContainer__main alertContainer__main--{{ item.type }}">
+            <span class="alertContainer__main--icon">
+                @switch (item.type) {
+                    @case ('success') { ✓ }
+                    @case ('error') { ✕ }
+                    @case ('info') { i }
+                }
+            </span>
+            <h3 class="alertContainer__main--heading">
+                {{ item.message }}
+            </h3>
+        </div>
+    }
+</div>

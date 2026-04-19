@@ -1,1 +1,55 @@
-<p>home works!</p>
+<section class="home">
+    <header class="home__hero">
+        <span class="home__hero--eyebrow">Strength Sports Platform</span>
+        <h1 class="home__hero--title">
+            Manage your <span class="home__hero--accent">Powerlifting</span> competitions
+        </h1>
+        <p class="home__hero--subtitle">
+            Organize events, track competitors and dominate the scoreboard — all in one place.
+        </p>
+        <div class="home__hero--actions">
+            <a routerLink="/event-creator" class="home__hero--btn home__hero--btn-primary">
+                Create event
+            </a>
+            <a routerLink="/users" class="home__hero--btn home__hero--btn-primary">
+                Add Athlete/Coach/Judge
+            </a>
+            <a routerLink="/events" class="home__hero--btn home__hero--btn-secondary">
+                Browse events
+            </a>
+        </div>
+    </header>
+
+    <div class="home__stats">
+        <div class="home__stats--card">
+            <span class="home__stats--value">2</span>
+            <span class="home__stats--label">Lifts per athlete</span>
+        </div>
+        <div class="home__stats--card">
+            <span class="home__stats--value">∞</span>
+            <span class="home__stats--label">Weight classes</span>
+        </div>
+        <div class="home__stats--card">
+            <span class="home__stats--value">1</span>
+            <span class="home__stats--label">Champion per event</span>
+        </div>
+    </div>
+
+    <div class="home__grid">
+        <a routerLink="/events" class="home__grid--card">
+            <span class="home__grid--icon home__grid--icon-events">E</span>
+            <h3 class="home__grid--title">Events</h3>
+            <p class="home__grid--desc">View upcoming and past competitions.</p>
+        </a>
+        <a routerLink="/event-creator" class="home__grid--card">
+            <span class="home__grid--icon home__grid--icon-create">+</span>
+            <h3 class="home__grid--title">New event</h3>
+            <p class="home__grid--desc">Set up a new meet from scratch.</p>
+        </a>
+        <a routerLink="/users" class="home__grid--card">
+            <span class="home__grid--icon home__grid--icon-users">U</span>
+            <h3 class="home__grid--title">Athletes</h3>
+            <p class="home__grid--desc">Browse registered competitors.</p>
+        </a>
+    </div>
+</section>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AlertService } from '../../shared/components/alert/alert.service';
 
 @Component({
   selector: 'app-users',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
+  alertService = inject(AlertService);
 
 }
