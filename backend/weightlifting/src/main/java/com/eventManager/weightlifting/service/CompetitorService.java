@@ -25,6 +25,7 @@ public class CompetitorService{
                             .weightCategory(competitor.getWeightCategory())
                             .ageCategory(competitor.getAgeCategory())
                             .gender(competitor.getGender())
+                            .dateOfBirth(competitor.getDateOfBirth())
                             .build();
                 })
                 .toList();
@@ -42,6 +43,7 @@ public class CompetitorService{
                     .weightCategory(fetchedCompetitor.getWeightCategory())
                     .ageCategory(fetchedCompetitor.getAgeCategory())
                     .gender(fetchedCompetitor.getGender())
+                    .dateOfBirth(fetchedCompetitor.getDateOfBirth())
                     .build();
         }
 
@@ -69,6 +71,7 @@ public class CompetitorService{
                 .weightCategory(saved.getWeightCategory())
                 .ageCategory(saved.getAgeCategory())
                 .gender(saved.getGender())
+                .dateOfBirth(saved.getDateOfBirth())
                 .build();
     }
 

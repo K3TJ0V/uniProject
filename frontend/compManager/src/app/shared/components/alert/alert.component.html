@@ -1,5 +1,5 @@
 <div class="alertContainer">
-    @for(item of values$ | async; track item.id){
+    @for(item of queue$ | async; track item.id){
         <div class="alertContainer__main alertContainer__main--{{ item.type }}">
             <span class="alertContainer__main--icon">
                 @switch (item.type) {

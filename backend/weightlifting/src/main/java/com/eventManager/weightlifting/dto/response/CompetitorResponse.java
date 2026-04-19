@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -18,4 +19,5 @@ public class CompetitorResponse {
     private String weightCategory;
     private String ageCategory;
     private String gender;
+    private LocalDate dateOfBirth;
 }

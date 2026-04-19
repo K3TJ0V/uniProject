@@ -23,6 +23,7 @@ public class JudgeService {
                             .firstName(judge.getFirstName())
                             .lastname(judge.getLastName())
                             .licenseNumber(judge.getLicenseNumber())
+                            .dateOfBirth(judge.getDateOfBirth())
                             .build();
                 }).toList();
     }
@@ -44,6 +45,7 @@ public class JudgeService {
                 .firstName(savedEntity.getFirstName())
                 .lastname(savedEntity.getLastName())
                 .licenseNumber(savedEntity.getLicenseNumber())
+                .dateOfBirth(judge.getDateOfBirth())
                 .build();
     }
 
@@ -57,6 +59,7 @@ public class JudgeService {
                     .firstName(judge.getFirstName())
                     .lastname(judge.getLastName())
                     .licenseNumber(judge.getLicenseNumber())
+                    .dateOfBirth(judge.getDateOfBirth())
                     .build();
         }else{
             return null;
