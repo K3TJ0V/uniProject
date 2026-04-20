@@ -15,7 +15,7 @@ import java.util.UUID;
 public class CompetitorResponse {
     private UUID id;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String weightCategory;
     private String ageCategory;
     private String gender;

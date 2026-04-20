@@ -1,32 +1,51 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserService } from './user.service';
 import { Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-users',
-  imports: [],
+  imports: [AsyncPipe, MatTableModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
-export class UsersComponent implements OnDestroy{
+export class UsersComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
+  protected coachColumns = ['firstName', 'lastName', 'team'];
+  protected judgesColumns = ['firstName', 'lastName', 'licenseNumber'];
+  protected competitorColumns = ['firstName', 'lastName', 'weightCategory', 'ageCategory', 'gender'];
 
-  private alertService = inject(AlertService);
-  private userService = inject(UserService);
+  protected coaches$;
+  protected judges$;
+  protected competitors$;
 
-  private coaches$ = this.userService.coaches$;
+  constructor(
+    private alertService: AlertService,
+    private userService: UserService
+  ) {
+    this.coaches$ = this.userService.coaches$,
+    this.judges$ =  this.userService.judges$,
+    this.competitors$ =  this.userService.competitors$
+  }
 
-
-  constructor() {
-    this.alertService.error("test")
-    this.userService.getAllCoaches().subscribe();
-    const coachSub = this.coaches$.subscribe({
-      next: (data) => {
-        console.log(data);
+  ngOnInit(): void {
+    this.userService.getAllCoaches().subscribe({
+      error: () => {
+        this.alertService.error("Failed to fetch coaches")
       }
-    })
-    this.subs.add(coachSub);
+    });
+    this.userService.getAllJudges().subscribe({
+      error: () => {
+        this.alertService.error("Failed to fetch judges")
+      }
+    });
+    this.userService.getAllCompetitor().subscribe({
+      error: () => {
+        this.alertService.error("Failed to fetch competitors")
+      }
+    });
   }
 
   ngOnDestroy(): void {

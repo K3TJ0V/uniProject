@@ -21,7 +21,7 @@ public class JudgeService {
                     return JudgeResponse.builder()
                             .id(judge.getId())
                             .firstName(judge.getFirstName())
-                            .lastname(judge.getLastName())
+                            .lastName(judge.getLastName())
                             .licenseNumber(judge.getLicenseNumber())
                             .dateOfBirth(judge.getDateOfBirth())
                             .build();
@@ -43,7 +43,7 @@ public class JudgeService {
         return JudgeResponse.builder()
                 .id(savedEntity.getId())
                 .firstName(savedEntity.getFirstName())
-                .lastname(savedEntity.getLastName())
+                .lastName(savedEntity.getLastName())
                 .licenseNumber(savedEntity.getLicenseNumber())
                 .dateOfBirth(judge.getDateOfBirth())
                 .build();
@@ -57,7 +57,7 @@ public class JudgeService {
             return JudgeResponse.builder()
                     .id(judge.getId())
                     .firstName(judge.getFirstName())
-                    .lastname(judge.getLastName())
+                    .lastName(judge.getLastName())
                     .licenseNumber(judge.getLicenseNumber())
                     .dateOfBirth(judge.getDateOfBirth())
                     .build();

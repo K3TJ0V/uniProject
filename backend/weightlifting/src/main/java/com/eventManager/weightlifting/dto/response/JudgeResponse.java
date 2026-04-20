@@ -15,7 +15,7 @@ import java.util.UUID;
 public class JudgeResponse {
     private UUID id;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private LocalDate dateOfBirth;
     private String licenseNumber;
 }

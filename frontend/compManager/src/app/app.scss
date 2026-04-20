@@ -1,16 +1,18 @@
 :host {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: #1f2937;
+    color: #e2e8f0;
 }
 
 .layout {
     display: grid;
     height: 100vh;
     grid-template-columns: minmax(220px, 16%) 1fr;
-    background: #f8fafc;
+    background: #0f172a;
 
     &__content {
         overflow-y: auto;
         height: 100vh;
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        color: #e2e8f0;
     }
 }

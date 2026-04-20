@@ -12,8 +12,8 @@ export class UserService{
     private http = inject(HttpClient);
 
     private coaches = new BehaviorSubject<CoachResponse[]>([]);
-    private judges = new BehaviorSubject<JudgeRequest[]>([]);
-    private competitors = new BehaviorSubject<CompetitorRequest[]>([]);
+    private judges = new BehaviorSubject<JudgeResponse[]>([]);
+    private competitors = new BehaviorSubject<CompetitorResponse[]>([]);
 
     public coaches$ = this.coaches.asObservable();
     public judges$ = this.judges.asObservable();
