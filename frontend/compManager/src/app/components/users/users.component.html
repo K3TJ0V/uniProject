@@ -2,6 +2,7 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Coaches</h2>
+            <button class="users-card__header--addButton" (click)="open({userType: 'coach'})">Add Coach</button>
             <span class="users-card__count">{{ (coaches$ | async)?.length ?? 0 }}</span>
         </header>
         <div class="users-card__table">
@@ -28,6 +29,7 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Judges</h2>
+            <button class="users-card__header--addButton" (click)="open({userType: 'judge'})">Add Judge</button>
             <span class="users-card__count">{{ (judges$ | async)?.length ?? 0 }}</span>
         </header>
         <div class="users-card__table">
@@ -54,6 +56,7 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Competitors</h2>
+            <button class="users-card__header--addButton" (click)="open({userType: 'competitor'})">Add Competitor</button>
             <span class="users-card__count">{{ (competitors$ | async)?.length ?? 0 }}</span>
         </header>
         <div class="users-card__table">

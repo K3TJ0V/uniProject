@@ -39,6 +39,29 @@
             radial-gradient(circle at 10% 0, rgba(220, 38, 38, 0.18) 0%, transparent 45%),
             linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 
+        &--addButton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.75rem;
+            height: 1.65rem;
+            padding: 0 0.6rem;
+            border-radius: 999px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            transition: 0.1s all;
+            cursor: pointer;
+        }
+
+        &--addButton:hover {
+            background: rgba(245, 159, 11, 0.343);
+
+        }
+
         &::before {
             content: '';
             position: absolute;

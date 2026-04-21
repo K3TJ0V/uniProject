@@ -1,0 +1,56 @@
+<section class="add-modal" [formGroup]="group">
+    <header class="add-modal__header">
+        <h2>Add {{ data.userType }}</h2>
+    </header>
+
+    <div class="add-modal__body">
+        <label class="add-modal__field">
+            <span>First name</span>
+            <input formControlName="firstName" placeholder="e.g. John" />
+        </label>
+
+        <label class="add-modal__field">
+            <span>Last name</span>
+            <input formControlName="lastName" placeholder="e.g. Doe" />
+        </label>
+
+        <label class="add-modal__field">
+            <span>Date of birth</span>
+            <input type="date" formControlName="dateOfBirth" />
+        </label>
+
+        @if (data.userType === 'coach') {
+            <label class="add-modal__field">
+                <span>Team</span>
+                <input formControlName="team" placeholder="Team name" />
+            </label>
+        }
+
+        @if (data.userType === 'judge') {
+            <label class="add-modal__field">
+                <span>License number</span>
+                <input formControlName="licenseNumber" placeholder="e.g. J-12345" />
+            </label>
+        }
+
+        @if (data.userType === 'competitor') {
+            <label class="add-modal__field">
+                <span>Weight category</span>
+                <input formControlName="weightCategory" placeholder="e.g. -70kg" />
+            </label>
+            <label class="add-modal__field">
+                <span>Age category</span>
+                <input formControlName="ageCategory" placeholder="e.g. Senior" />
+            </label>
+            <label class="add-modal__field">
+                <span>Gender</span>
+                <input formControlName="gender" placeholder="M / F" />
+            </label>
+        }
+    </div>
+
+    <footer class="add-modal__footer">
+        <button type="button" class="add-modal__btn add-modal__btn--ghost" (click)="cancel()">Cancel</button>
+        <button type="button" class="add-modal__btn add-modal__btn--primary" [disabled]="group.invalid" (click)="save()">Save</button>
+    </footer>
+</section>

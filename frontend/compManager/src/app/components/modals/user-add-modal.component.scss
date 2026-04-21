@@ -1,0 +1,163 @@
+:host {
+    display: block;
+}
+
+.add-modal {
+    display: flex;
+    flex-direction: column;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    color: #f8fafc;
+    min-width: 380px;
+
+    &__header {
+        position: relative;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 100% 0, rgba(245, 158, 11, 0.22) 0%, transparent 60%),
+            radial-gradient(circle at 10% 0, rgba(220, 38, 38, 0.18) 0%, transparent 45%),
+            linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25%;
+            width: 3px;
+            height: 50%;
+            background: #f59e0b;
+            border-radius: 0 3px 3px 0;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+        }
+
+        h2 {
+            position: relative;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #f8fafc;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        padding: 1.5rem;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+
+        span {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            font: inherit;
+            font-size: 0.9rem;
+            color: #f8fafc;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+
+            &::placeholder {
+                color: #475569;
+            }
+
+            &:hover {
+                border-color: rgba(245, 158, 11, 0.25);
+            }
+
+            &:focus {
+                border-color: rgba(245, 158, 11, 0.6);
+                background: rgba(15, 23, 42, 0.85);
+                box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
+            }
+
+            &::-webkit-calendar-picker-indicator {
+                filter: invert(0.7) sepia(1) saturate(6) hue-rotate(-10deg);
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.6rem;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.08);
+        background: rgba(15, 23, 42, 0.4);
+    }
+
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.1rem;
+        height: 2rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 120ms ease;
+
+        &--ghost {
+            background: transparent;
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+
+            &:hover {
+                color: #f8fafc;
+                border-color: rgba(148, 163, 184, 0.4);
+                background: rgba(148, 163, 184, 0.06);
+            }
+        }
+
+        &--primary {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+
+            &:hover:not(:disabled) {
+                background: rgba(245, 159, 11, 0.34);
+                box-shadow: 0 0 14px rgba(245, 158, 11, 0.25);
+            }
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

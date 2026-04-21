@@ -4,6 +4,8 @@ import { UserService } from './user.service';
 import { Subscription } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { AddUserData, UserAddModalComponent } from '../modals/user-add-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -23,11 +25,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {
     this.coaches$ = this.userService.coaches$,
-    this.judges$ =  this.userService.judges$,
-    this.competitors$ =  this.userService.competitors$
+      this.judges$ = this.userService.judges$,
+      this.competitors$ = this.userService.competitors$
   }
 
   ngOnInit(): void {
@@ -48,6 +51,21 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
+  open(data: AddUserData) {
+    this.dialog.open(UserAddModalComponent, {
+      data,
+      width: '420px',
+      panelClass: 'app-dialog-panel'
+    }).afterClosed().subscribe({
+      next: (res) => {
+        if (!res) { return };
+        this.onAdd();
+      }
+    })
+  }
+  onAdd() {
+    console.log("add")
+  }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
