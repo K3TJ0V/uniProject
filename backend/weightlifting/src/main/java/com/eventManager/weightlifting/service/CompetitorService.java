@@ -59,7 +59,7 @@ public class CompetitorService{
         comp.setWeightCategory(competitor.getWeightCategory());
         comp.setGender(competitor.getGender());
         comp.setFirstName(competitor.getFirstName());
-        comp.setLastName(competitor.getLastname());
+        comp.setLastName(competitor.getLastName());
         comp.setDateOfBirth(competitor.getDateOfBirth());
 
         Competitor saved = competitorRepo.save(comp);

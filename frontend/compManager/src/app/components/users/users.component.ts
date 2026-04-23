@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserService } from './user.service';
-import { Subscription } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserData, UserAddModalComponent } from '../modals/user-add-modal.component';
+import { JudgeRequest } from '../../models/user/Judge';
+import { CoachRequest } from '../../models/user/Coach';
+import { CompetitorRequest } from '../../models/user/Competitor';
 
 @Component({
   selector: 'app-users',
@@ -15,9 +18,9 @@ import { AddUserData, UserAddModalComponent } from '../modals/user-add-modal.com
 })
 export class UsersComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
-  protected coachColumns = ['firstName', 'lastName', 'team'];
-  protected judgesColumns = ['firstName', 'lastName', 'licenseNumber'];
-  protected competitorColumns = ['firstName', 'lastName', 'weightCategory', 'ageCategory', 'gender'];
+  protected coachColumns = ['firstName', 'lastName', 'team', 'actions'];
+  protected judgesColumns = ['firstName', 'lastName', 'licenseNumber', 'actions'];
+  protected competitorColumns = ['firstName', 'lastName', 'weightCategory', 'ageCategory', 'gender', 'actions'];
 
   protected coaches$;
   protected judges$;
@@ -59,14 +62,50 @@ export class UsersComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe({
       next: (res) => {
         if (!res) { return };
-        this.onAdd();
+        this.onAdd(res, data.userType);
       }
     })
   }
-  onAdd() {
-    console.log("add")
+  onAdd(req: JudgeRequest | CoachRequest | CompetitorRequest, userType: string) {
+    switch (userType) {
+      case 'coach': {
+        this.userService.addNewCoach(req as CoachRequest).subscribe();
+        break;
+      };
+      case 'judge': {
+        this.userService.addNewJudge(req as JudgeRequest).subscribe();
+        break;
+      };
+      case 'competitor': {
+        this.userService.addNewCompetitor(req as CompetitorRequest).subscribe();
+        break;
+      }
+    }
+  }
+  deleteCoach(coachId: string) {
+    this.userService.deleteCoach(coachId).subscribe({
+      next: () => {
+        this.userService.getAllCoaches().subscribe();
+      }
+    })
+  }
+  deleteJudge(judgeId: string) {
+    this.userService.deleteJudge(judgeId).subscribe({
+      next: () => {
+        this.userService.getAllJudges().subscribe();
+      }
+    })
+  }
+  deleteCompetitor(competitorId: string) {
+
+    this.userService.deleteCompetitor(competitorId).subscribe({
+      next: () => {
+        this.userService.getAllCompetitor().subscribe();
+      }
+    })
+
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
-  }
+  };
 }

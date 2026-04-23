@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CompetitorRequest {
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String weightCategory;
     private String ageCategory;
     private String gender;

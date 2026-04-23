@@ -47,4 +47,8 @@ public class CoachController {
 
         return new ResponseEntity<>(coach, HttpStatus.CREATED);
     }
+    @DeleteMapping("/{id}")
+    public void deleteCoach(@PathVariable UUID id){
+        coachService.deleteCoach(id);
+    }
 }

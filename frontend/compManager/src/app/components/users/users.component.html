@@ -19,7 +19,16 @@
                     <th mat-header-cell *matHeaderCellDef>Team</th>
                     <td mat-cell *matCellDef="let element"> {{element.team}} </td>
                 </ng-container>
-
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="users-card__actions-cell">Actions</th>
+                    <td mat-cell *matCellDef="let element" class="users-card__actions-cell">
+                        <div class="users-card__actions">
+                            <button class="users-card__action users-card__action--edit">Edit</button>
+                            <button class="users-card__action users-card__action--delete"
+                                (click)="deleteCoach(element.id)">Delete</button>
+                        </div>
+                    </td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="coachColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: coachColumns"></tr>
             </table>
@@ -46,7 +55,16 @@
                     <th mat-header-cell *matHeaderCellDef>License number</th>
                     <td mat-cell *matCellDef="let element"> {{element.licenseNumber}} </td>
                 </ng-container>
-
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="users-card__actions-cell">Actions</th>
+                    <td mat-cell *matCellDef="let element" class="users-card__actions-cell">
+                        <div class="users-card__actions">
+                            <button class="users-card__action users-card__action--edit">Edit</button>
+                            <button class="users-card__action users-card__action--delete"
+                                (click)="deleteJudge(element.id)">Delete</button>
+                        </div>
+                    </td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="judgesColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: judgesColumns"></tr>
             </table>
@@ -56,7 +74,8 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Competitors</h2>
-            <button class="users-card__header--addButton" (click)="open({userType: 'competitor'})">Add Competitor</button>
+            <button class="users-card__header--addButton" (click)="open({userType: 'competitor'})">Add
+                Competitor</button>
             <span class="users-card__count">{{ (competitors$ | async)?.length ?? 0 }}</span>
         </header>
         <div class="users-card__table">
@@ -81,7 +100,16 @@
                     <th mat-header-cell *matHeaderCellDef>Gender</th>
                     <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
                 </ng-container>
-
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="users-card__actions-cell">Actions</th>
+                    <td mat-cell *matCellDef="let element" class="users-card__actions-cell">
+                        <div class="users-card__actions">
+                            <button class="users-card__action users-card__action--edit">Edit</button>
+                            <button class="users-card__action users-card__action--delete"
+                                (click)="deleteCompetitor(element.id)">Delete</button>
+                        </div>
+                    </td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="competitorColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: competitorColumns"></tr>
             </table>
