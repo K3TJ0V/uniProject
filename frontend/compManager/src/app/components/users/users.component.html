@@ -2,7 +2,7 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Coaches</h2>
-            <button class="users-card__header--addButton" (click)="open({userType: 'coach'})">Add Coach</button>
+            <button class="users-card__header--addButton" (click)="open(EmptyCoachBody)">Add Coach</button>
             <span class="users-card__count">{{ (coaches$ | async)?.length ?? 0 }}</span>
         </header>
         <div class="users-card__table">
@@ -23,7 +23,8 @@
                     <th mat-header-cell *matHeaderCellDef class="users-card__actions-cell">Actions</th>
                     <td mat-cell *matCellDef="let element" class="users-card__actions-cell">
                         <div class="users-card__actions">
-                            <button class="users-card__action users-card__action--edit">Edit</button>
+                            <button class="users-card__action users-card__action--edit"
+                                (click)="open({...element, mode: 'edit', userType: 'coach'})">Edit</button>
                             <button class="users-card__action users-card__action--delete"
                                 (click)="deleteCoach(element.id)">Delete</button>
                         </div>
@@ -38,7 +39,7 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Judges</h2>
-            <button class="users-card__header--addButton" (click)="open({userType: 'judge'})">Add Judge</button>
+            <button class="users-card__header--addButton" (click)="open(EmptyJudgeBody)">Add Judge</button>
             <span class="users-card__count">{{ (judges$ | async)?.length ?? 0 }}</span>
         </header>
         <div class="users-card__table">
@@ -59,7 +60,8 @@
                     <th mat-header-cell *matHeaderCellDef class="users-card__actions-cell">Actions</th>
                     <td mat-cell *matCellDef="let element" class="users-card__actions-cell">
                         <div class="users-card__actions">
-                            <button class="users-card__action users-card__action--edit">Edit</button>
+                            <button class="users-card__action users-card__action--edit"
+                                (click)="open({...element, mode: 'edit', userType: 'judge'})">Edit</button>
                             <button class="users-card__action users-card__action--delete"
                                 (click)="deleteJudge(element.id)">Delete</button>
                         </div>
@@ -74,7 +76,7 @@
     <section class="users-card">
         <header class="users-card__header">
             <h2>Competitors</h2>
-            <button class="users-card__header--addButton" (click)="open({userType: 'competitor'})">Add
+            <button class="users-card__header--addButton" (click)="open(EmptyCompetitorBody)">Add
                 Competitor</button>
             <span class="users-card__count">{{ (competitors$ | async)?.length ?? 0 }}</span>
         </header>
@@ -104,7 +106,8 @@
                     <th mat-header-cell *matHeaderCellDef class="users-card__actions-cell">Actions</th>
                     <td mat-cell *matCellDef="let element" class="users-card__actions-cell">
                         <div class="users-card__actions">
-                            <button class="users-card__action users-card__action--edit">Edit</button>
+                            <button class="users-card__action users-card__action--edit"
+                                (click)="open({...element, mode: 'edit', userType: 'competitor'})">Edit</button>
                             <button class="users-card__action users-card__action--delete"
                                 (click)="deleteCompetitor(element.id)">Delete</button>
                         </div>

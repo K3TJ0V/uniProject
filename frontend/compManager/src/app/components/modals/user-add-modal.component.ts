@@ -1,12 +1,22 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { JudgeRequest, JudgeResponse } from "../../models/user/Judge";
+import { JudgeRequest } from "../../models/user/Judge";
 import { CoachRequest } from "../../models/user/Coach";
 import { CompetitorRequest } from "../../models/user/Competitor";
 
 export interface AddUserData {
     userType: 'coach' | 'judge' | 'competitor';
+    mode: 'edit' | 'add',
+    id?: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: Date,
+    team? : string,
+    licenseNumber? : string,
+    weightCategory? : string,
+    ageCategory? : string,
+    gender? : string
 }
 
 @Component({
@@ -24,14 +34,14 @@ export class UserAddModalComponent {
 
     constructor() {
         this.group = this.fb.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            dateOfBirth: [new Date(), Validators.required],
-            team: (this.data.userType === 'coach') ? [''] : null,
-            licenseNumber: (this.data.userType === 'judge') ? ['', Validators.required] : null,
-            weightCategory: (this.data.userType === 'competitor') ? ['', Validators.required] : null,
-            ageCategory: (this.data.userType === 'competitor') ? ['', Validators.required] : null,
-            gender: (this.data.userType === 'competitor') ? ['', Validators.required] : null
+            firstName: [this.data ? this.data.firstName : '', Validators.required],
+            lastName: [this.data ? this.data.lastName : '', Validators.required],
+            dateOfBirth: [this.data ? this.data.dateOfBirth : new Date(), Validators.required],
+            team: (this.data.userType === 'coach') ? [this.data.team ? this.data.team : ''] : null,
+            licenseNumber: (this.data.userType === 'judge') ? [this.data.licenseNumber ? this.data.licenseNumber : '', Validators.required] : null,
+            weightCategory: (this.data.userType === 'competitor') ? [this.data.weightCategory ? this.data.weightCategory : '', Validators.required] : null,
+            ageCategory: (this.data.userType === 'competitor') ? [this.data.ageCategory ? this.data.ageCategory : '', Validators.required] : null,
+            gender: (this.data.userType === 'competitor') ? [this.data.gender ? this.data.gender : '', Validators.required] : null
         })
     }
 
@@ -41,6 +51,8 @@ export class UserAddModalComponent {
 
         const raw = this.group.getRawValue();
 
+        const editId = this.data.mode === 'edit' ? { id: this.data.id } : {};
+
         switch (this.data.userType) {
             case 'judge': {
                 const judge: JudgeRequest = {
@@ -49,7 +61,7 @@ export class UserAddModalComponent {
                     dateOfBirth: raw.dateOfBirth!,
                     licenseNumber: (raw.licenseNumber! as unknown as string) ?? '',
                 };
-                this.ref.close(judge);
+                this.ref.close({ ...judge, ...editId, mode: this.data.mode });
                 break;
             }
             case 'coach': {
@@ -59,7 +71,7 @@ export class UserAddModalComponent {
                     dateOfBirth: raw.dateOfBirth!,
                     team: (raw.team! as unknown as string) ?? ''
                 }
-                this.ref.close(coach);
+                this.ref.close({ ...coach, ...editId, mode: this.data.mode });
                 break;
             }
             case 'competitor': {
@@ -71,7 +83,7 @@ export class UserAddModalComponent {
                     ageCategory: (raw.ageCategory! as unknown as string) ?? '',
                     gender: (raw.gender! as unknown as string) ?? '',
                 }
-                this.ref.close(competitor);
+                this.ref.close({ ...competitor, ...editId, mode: this.data.mode });
                 break;
             }
         }

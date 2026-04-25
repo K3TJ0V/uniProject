@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserService } from './user.service';
-import { Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserData, UserAddModalComponent } from '../modals/user-add-modal.component';
 import { JudgeRequest } from '../../models/user/Judge';
-import { CoachRequest } from '../../models/user/Coach';
+import { Coach, CoachRequest } from '../../models/user/Coach';
 import { CompetitorRequest } from '../../models/user/Competitor';
 
 @Component({
@@ -25,6 +25,33 @@ export class UsersComponent implements OnInit, OnDestroy {
   protected coaches$;
   protected judges$;
   protected competitors$;
+
+  protected EmptyCoachBody: AddUserData = {
+    userType: 'coach',
+    mode: 'add',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: new Date(),
+    team: ''
+  }
+  protected EmptyJudgeBody: AddUserData = {
+    userType: 'judge',
+    mode: 'add',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: new Date(),
+    licenseNumber: ''
+  }
+  protected EmptyCompetitorBody: AddUserData = {
+    userType: 'competitor',
+    mode: 'add',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: new Date(),
+    weightCategory: '',
+    ageCategory: '',
+    gender: ''
+  }
 
   constructor(
     private alertService: AlertService,
@@ -62,7 +89,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe({
       next: (res) => {
         if (!res) { return };
-        this.onAdd(res, data.userType);
+        if(res.mode === 'add'){
+          this.onAdd(res, data.userType);
+        }else if(res.mode === 'edit'){
+          this.onEdit(res, data.userType);
+        }
       }
     })
   }
@@ -78,6 +109,22 @@ export class UsersComponent implements OnInit, OnDestroy {
       };
       case 'competitor': {
         this.userService.addNewCompetitor(req as CompetitorRequest).subscribe();
+        break;
+      }
+    }
+  }
+  onEdit(req: any, userType: string){
+    switch (userType) {
+      case 'coach': {
+        this.userService.editCoach(req.id, req as CoachRequest).subscribe();
+        break;
+      };
+      case 'judge': {
+        this.userService.editJudge(req.id, req as JudgeRequest).subscribe();
+        break;
+      };
+      case 'competitor': {
+        this.userService.editCompetitor(req.id, req as CompetitorRequest).subscribe();
         break;
       }
     }

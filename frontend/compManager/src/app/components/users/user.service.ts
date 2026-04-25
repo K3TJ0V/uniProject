@@ -52,6 +52,12 @@ export class UserService {
     public deleteCoach(coachId: string): Observable<void> {
         return this.http.delete<void>(`${baseUrl}/coach/${coachId}`)
     }
+    public editCoach(coachId: string, coach: CoachRequest): Observable<CoachResponse> {
+        return this.http.put<CoachResponse>(`${baseUrl}/coach/${coachId}`, coach)
+            .pipe(
+                tap(() => { this.getAllCoaches().subscribe() })
+            )
+    }
     public addNewJudge(judge: JudgeRequest): Observable<JudgeResponse> {
         return this.http.post<JudgeResponse>(`${baseUrl}/judge`, judge)
             .pipe(
@@ -61,6 +67,12 @@ export class UserService {
     public deleteJudge(judgeId: string): Observable<void> {
         return this.http.delete<void>(`${baseUrl}/judge/${judgeId}`)
     }
+    public editJudge(judgeId: string, judge: JudgeRequest): Observable<JudgeResponse> {
+        return this.http.put<JudgeResponse>(`${baseUrl}/judge/${judgeId}`, judge)
+            .pipe(
+                tap(() => { this.getAllJudges().subscribe() })
+            )
+    }
     public addNewCompetitor(competitor: CompetitorRequest): Observable<CompetitorRequest> {
         return this.http.post<CompetitorResponse>(`${baseUrl}/competitor`, competitor)
             .pipe(
@@ -69,5 +81,11 @@ export class UserService {
     }
     public deleteCompetitor(competitorId: string): Observable<void> {
         return this.http.delete<void>(`${baseUrl}/competitor/${competitorId}`)
+    }
+    public editCompetitor(competitorId: string, competitor: CompetitorRequest): Observable<CompetitorResponse> {
+        return this.http.put<CompetitorResponse>(`${baseUrl}/competitor/${competitorId}`, competitor)
+            .pipe(
+                tap(() => { this.getAllCompetitor().subscribe() })
+            )
     }
 }
