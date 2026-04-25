@@ -1,9 +1,12 @@
 package com.eventManager.weightlifting.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,6 +15,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Table(name = "judge")
-public class Judge extends Person{
+public class Judge extends Person {
     private String licenseNumber;
+
+    @ManyToMany(mappedBy = "judges")
+    private List<Event> events;
 }

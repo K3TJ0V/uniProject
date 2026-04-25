@@ -3,3 +3,7 @@ musi byc GUI
 musi byc baza
 
 na 1 zajecia - diagram klas
+
+
+event entity
+name, rank, competitors, judges, location, date
