@@ -23,7 +23,7 @@ public class Event {
     private String name;
     private String rank;
     private String location;
-    private LocalDate start;
+    private LocalDate startDate;
 
     @ManyToMany
     @JoinTable(name = "event_competitors")

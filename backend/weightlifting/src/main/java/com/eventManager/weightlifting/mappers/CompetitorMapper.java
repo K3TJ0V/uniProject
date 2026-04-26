@@ -27,6 +27,7 @@ public class CompetitorMapper {
                 .id(coach.getId())
                 .firstName(coach.getFirstName())
                 .lastName(coach.getLastName())
+                .team(coach.getTeam())
                 .build();
 
         return CompetitorWithCoachResponse.builder()

@@ -1,6 +1,5 @@
 package com.eventManager.weightlifting.repo;
 
-import com.eventManager.weightlifting.dto.competitor.CompetitorWithCoachResponse;
 import com.eventManager.weightlifting.model.Competitor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

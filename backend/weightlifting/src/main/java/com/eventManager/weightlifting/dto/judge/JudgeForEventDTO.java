@@ -1,4 +1,4 @@
-package com.eventManager.weightlifting.dto.coach;
+package com.eventManager.weightlifting.dto.judge;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class CoachForCompetitorDTO {
+public class JudgeForEventDTO {
     private UUID id;
     private String firstName;
     private String lastName;
-    private String team;
+    private String licenseNumber;
 }

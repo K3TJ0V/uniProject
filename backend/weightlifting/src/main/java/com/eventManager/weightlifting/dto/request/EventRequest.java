@@ -1,0 +1,17 @@
+package com.eventManager.weightlifting.dto.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class EventRequest {
+    private String name;
+    private String rank;
+    private String location;
+    private String startDate;
+}
