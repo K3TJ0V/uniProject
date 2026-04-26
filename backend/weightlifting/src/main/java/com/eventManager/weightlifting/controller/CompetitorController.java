@@ -1,5 +1,6 @@
 package com.eventManager.weightlifting.controller;
 
+import com.eventManager.weightlifting.dto.competitor.CompetitorWithCoachResponse;
 import com.eventManager.weightlifting.dto.request.CompetitorRequest;
 import com.eventManager.weightlifting.dto.response.CompetitorResponse;
 import com.eventManager.weightlifting.service.CompetitorService;
@@ -29,9 +30,23 @@ public class CompetitorController {
         CompetitorResponse res = compService.getSingle(id);
         if(res == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else {
-            return new ResponseEntity<>(res, HttpStatus.FOUND);
         }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/coach")
+    public ResponseEntity<CompetitorWithCoachResponse> getCompetitorWithCoach(@PathVariable UUID id){
+        CompetitorWithCoachResponse res = compService.getSingleWithCoach(id);
+        if(res == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/with-coaches")
+    public ResponseEntity<List<CompetitorWithCoachResponse>> getAllCompetitorsWithCoaches(){
+        List<CompetitorWithCoachResponse> res = compService.getAllWithCoaches();
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping

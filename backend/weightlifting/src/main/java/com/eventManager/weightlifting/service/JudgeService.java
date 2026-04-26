@@ -2,6 +2,7 @@ package com.eventManager.weightlifting.service;
 
 import com.eventManager.weightlifting.dto.request.JudgeRequest;
 import com.eventManager.weightlifting.dto.response.JudgeResponse;
+import com.eventManager.weightlifting.mappers.JudgeMapper;
 import com.eventManager.weightlifting.model.Judge;
 import com.eventManager.weightlifting.repo.JudgeRepo;
 import lombok.RequiredArgsConstructor;
@@ -14,18 +15,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JudgeService {
     private final JudgeRepo judgeRepo;
+    private final JudgeMapper mapper;
 
     public List<JudgeResponse> getAll(){
         return judgeRepo.findAll().stream()
-                .map(judge -> {
-                    return JudgeResponse.builder()
-                            .id(judge.getId())
-                            .firstName(judge.getFirstName())
-                            .lastName(judge.getLastName())
-                            .licenseNumber(judge.getLicenseNumber())
-                            .dateOfBirth(judge.getDateOfBirth())
-                            .build();
-                }).toList();
+                .map(mapper::toResponse).toList();
     }
 
     public JudgeResponse upsertJudge(JudgeRequest judgeData, UUID id){
@@ -40,13 +34,7 @@ public class JudgeService {
         
         Judge savedEntity = judgeRepo.save(judge);
 
-        return JudgeResponse.builder()
-                .id(savedEntity.getId())
-                .firstName(savedEntity.getFirstName())
-                .lastName(savedEntity.getLastName())
-                .licenseNumber(savedEntity.getLicenseNumber())
-                .dateOfBirth(judge.getDateOfBirth())
-                .build();
+        return mapper.toResponse(savedEntity);
     }
 
     public JudgeResponse getById(UUID id){
@@ -54,13 +42,7 @@ public class JudgeService {
                 .orElse(null);
 
         if(judge != null){
-            return JudgeResponse.builder()
-                    .id(judge.getId())
-                    .firstName(judge.getFirstName())
-                    .lastName(judge.getLastName())
-                    .licenseNumber(judge.getLicenseNumber())
-                    .dateOfBirth(judge.getDateOfBirth())
-                    .build();
+            return mapper.toResponse(judge);
         }else{
             return null;
         }
