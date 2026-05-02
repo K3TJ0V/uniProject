@@ -1,1 +1,108 @@
-<p>event-list works!</p>
+<div class="events-page">
+
+    <div class="events-header">
+        <h2>Events</h2>
+        <div class="events-header__right">
+            <span class="events-header__count">{{ events().length }}</span>
+            <button class="events-header__add" (click)="goToCreator()">New Event</button>
+        </div>
+    </div>
+
+    @if (events().length === 0) {
+        <div class="events-empty">
+            <span>No events yet.</span>
+            <button class="events-empty__btn" (click)="goToCreator()">Create your first event</button>
+        </div>
+    } @else {
+        <div class="accordion">
+            @for (ev of events(); track ev.id) {
+                <div class="accordion-item" [class.accordion-item--open]="isOpen(ev.id)">
+
+                    <button class="accordion-item__header" (click)="toggle(ev.id)">
+                        <div class="accordion-item__meta">
+                            <span class="accordion-item__name">{{ ev.name }}</span>
+                            <span class="accordion-item__tags">
+                                <span class="tag tag--rank">{{ ev.rank }}</span>
+                                <span class="tag tag--location">{{ ev.location }}</span>
+                                <span class="tag tag--date">{{ ev.startDate }}</span>
+                            </span>
+                        </div>
+                        <div class="accordion-item__actions">
+                            <span class="accordion-item__counters">
+                                <span class="counter">{{ ev.judges.length }} judges</span>
+                                <span class="counter">{{ ev.competitors.length }} competitors</span>
+                            </span>
+                            <button class="accordion-item__manage" (click)="goToManager(ev.id, $event)">Manage</button>
+                            <button class="accordion-item__delete" (click)="delete(ev.id, $event)">Delete</button>
+                            <span class="accordion-item__chevron" [class.accordion-item__chevron--open]="isOpen(ev.id)">&#8250;</span>
+                        </div>
+                    </button>
+
+                    @if (isOpen(ev.id)) {
+                        <div class="accordion-item__body">
+
+                            <div class="accordion-panel">
+                                <h4 class="accordion-panel__title">Judges</h4>
+                                @if (ev.judges.length === 0) {
+                                    <p class="accordion-panel__empty">No judges assigned.</p>
+                                } @else {
+                                    <table class="accordion-panel__table">
+                                        <thead>
+                                            <tr>
+                                                <th>First name</th>
+                                                <th>Last name</th>
+                                                <th>License</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (judge of ev.judges; track judge.id) {
+                                                <tr>
+                                                    <td>{{ judge.firstName }}</td>
+                                                    <td>{{ judge.lastName }}</td>
+                                                    <td>{{ judge.licenseNumber }}</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
+
+                            <div class="accordion-panel">
+                                <h4 class="accordion-panel__title">Competitors</h4>
+                                @if (ev.competitors.length === 0) {
+                                    <p class="accordion-panel__empty">No competitors assigned.</p>
+                                } @else {
+                                    <table class="accordion-panel__table">
+                                        <thead>
+                                            <tr>
+                                                <th>First name</th>
+                                                <th>Last name</th>
+                                                <th>Weight</th>
+                                                <th>Age cat.</th>
+                                                <th>Gender</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (comp of ev.competitors; track comp.id) {
+                                                <tr>
+                                                    <td>{{ comp.firstName }}</td>
+                                                    <td>{{ comp.lastName }}</td>
+                                                    <td>{{ comp.weightCategory }}</td>
+                                                    <td>{{ comp.ageCategory }}</td>
+                                                    <td>{{ comp.gender }}</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+        </div>
+    }
+
+</div>

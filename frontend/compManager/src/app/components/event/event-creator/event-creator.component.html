@@ -1,1 +1,93 @@
-<p>event-creator works!</p>
+<div class="creator-page">
+    <div class="creator-card" [formGroup]="form">
+
+        <header class="creator-card__header">
+            <h2>New Event</h2>
+        </header>
+
+        <div class="creator-card__body">
+
+            <section class="creator-section">
+                <h3 class="creator-section__title">Event Details</h3>
+                <div class="creator-section__fields">
+                    <label class="creator-field">
+                        <span>Name</span>
+                        <input formControlName="name" placeholder="e.g. National Championship 2025" />
+                    </label>
+                    <label class="creator-field">
+                        <span>Rank</span>
+                        <input formControlName="rank" placeholder="e.g. National, Regional, Local" />
+                    </label>
+                    <label class="creator-field">
+                        <span>Location</span>
+                        <input formControlName="location" placeholder="e.g. Warsaw, Poland" />
+                    </label>
+                    <label class="creator-field">
+                        <span>Start Date</span>
+                        <input type="date" formControlName="startDate" />
+                    </label>
+                </div>
+            </section>
+
+            <section class="creator-section">
+                <h3 class="creator-section__title">
+                    Judges
+                    <span class="creator-section__badge" [class.creator-section__badge--warn]="selectedJudgeIds().size < 3">{{ selectedJudgeIds().size }}</span>
+                    @if (selectedJudgeIds().size < 3) {
+                        <span class="creator-section__hint">min. 3 required</span>
+                    }
+                </h3>
+                @if (judges().length === 0) {
+                    <p class="creator-empty">No judges available.</p>
+                } @else {
+                    <div class="creator-checklist">
+                        @for (judge of judges(); track judge.id) {
+                            <label class="creator-check" [class.creator-check--active]="isJudgeSelected(judge.id)">
+                                <input
+                                    type="checkbox"
+                                    [checked]="isJudgeSelected(judge.id)"
+                                    (change)="toggleJudge(judge.id)"
+                                />
+                                <span class="creator-check__box"></span>
+                                <span class="creator-check__label">{{ judge.firstName }} {{ judge.lastName }}</span>
+                                <span class="creator-check__meta">{{ judge.licenseNumber }}</span>
+                            </label>
+                        }
+                    </div>
+                }
+            </section>
+
+            <section class="creator-section">
+                <h3 class="creator-section__title">
+                    Competitors
+                    <span class="creator-section__badge">{{ selectedCompetitorIds().size }}</span>
+                </h3>
+                @if (competitors().length === 0) {
+                    <p class="creator-empty">No competitors available.</p>
+                } @else {
+                    <div class="creator-checklist">
+                        @for (competitor of competitors(); track competitor.id) {
+                            <label class="creator-check" [class.creator-check--active]="isCompetitorSelected(competitor.id)">
+                                <input
+                                    type="checkbox"
+                                    [checked]="isCompetitorSelected(competitor.id)"
+                                    (change)="toggleCompetitor(competitor.id)"
+                                />
+                                <span class="creator-check__box"></span>
+                                <span class="creator-check__label">{{ competitor.firstName }} {{ competitor.lastName }}</span>
+                                <span class="creator-check__meta">{{ competitor.weightCategory }} · {{ competitor.ageCategory }} · {{ competitor.gender }}</span>
+                            </label>
+                        }
+                    </div>
+                }
+            </section>
+
+        </div>
+
+        <footer class="creator-card__footer">
+            <button type="button" class="creator-btn creator-btn--ghost" (click)="cancel()">Cancel</button>
+            <button type="button" class="creator-btn creator-btn--primary" [disabled]="form.invalid || selectedJudgeIds().size < 3" (click)="submit()">Create Event</button>
+        </footer>
+
+    </div>
+</div>

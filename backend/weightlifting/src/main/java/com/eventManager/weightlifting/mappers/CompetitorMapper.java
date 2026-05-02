@@ -42,6 +42,12 @@ public class CompetitorMapper {
                 .build();
     }
 
+    public List<CompetitorResponse> toListResponse(List<Competitor> comps){
+        return comps.stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
     public List<CompetitorWithCoachResponse> toListOfCompsWithCoachesDTO(List<Competitor> comps){
         return comps.stream()
                 .map(competitor -> toResponseWithCoachDTO(competitor, competitor.getCoach()))

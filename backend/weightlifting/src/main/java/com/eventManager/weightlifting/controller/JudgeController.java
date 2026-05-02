@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/judge")
 public class JudgeController {
     private final JudgeService judgeService;

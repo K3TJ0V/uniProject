@@ -4,6 +4,8 @@ import com.eventManager.weightlifting.dto.response.JudgeResponse;
 import com.eventManager.weightlifting.model.Judge;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class JudgeMapper {
     public JudgeResponse toResponse(Judge judge){
@@ -14,5 +16,10 @@ public class JudgeMapper {
                 .licenseNumber(judge.getLicenseNumber())
                 .dateOfBirth(judge.getDateOfBirth())
                 .build();
+    }
+    public List<JudgeResponse> toListResponse(List<Judge> judges){
+        return judges.stream()
+                .map(this::toResponse)
+                .toList();
     }
 }
