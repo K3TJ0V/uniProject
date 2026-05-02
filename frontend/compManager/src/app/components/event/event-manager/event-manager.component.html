@@ -2,134 +2,126 @@
 
     @if (event(); as ev) {
 
-        <header class="manager-header">
-            <div class="manager-header__left">
-                <button class="manager-header__back" (click)="back()">&#8592; Events</button>
-                <div class="manager-header__info">
-                    <h2>{{ ev.name }}</h2>
-                    <div class="manager-header__tags">
-                        <span class="tag tag--rank">{{ ev.rank }}</span>
-                        <span class="tag tag--location">{{ ev.location }}</span>
-                        <span class="tag tag--date">{{ ev.startDate }}</span>
-                    </div>
+    <header class="manager-header">
+        <div class="manager-header__left">
+            <button class="manager-header__back" (click)="back()">&#8592; Events</button>
+            <div class="manager-header__info">
+                <h2>{{ ev.name }}</h2>
+                <div class="manager-header__tags">
+                    <span class="tag tag--rank">{{ ev.rank }}</span>
+                    <span class="tag tag--location">{{ ev.location }}</span>
+                    <span class="tag tag--date">{{ ev.startDate }}</span>
                 </div>
             </div>
-            <div class="manager-header__judges">
-                <span class="manager-header__judges-label">Judges</span>
-                @for (judge of ev.judges; track judge.id) {
-                    <span class="judge-chip">{{ judge.firstName }} {{ judge.lastName }}</span>
-                }
-            </div>
-        </header>
+        </div>
+        <div class="manager-header__judges">
+            <span class="manager-header__judges-label">Judges</span>
+            @for (judge of ev.judges; track judge.id) {
+            <span class="judge-chip">{{ judge.firstName }} {{ judge.lastName }}</span>
+            }
+        </div>
+    </header>
 
-        @for (discipline of disciplines; track discipline) {
-            <section class="scoring-section">
-                <h3 class="scoring-section__title">{{ disciplineLabel(discipline) }}</h3>
+    @for (discipline of disciplines; track discipline) {
+    <section class="scoring-section">
+        <h3 class="scoring-section__title">{{ disciplineLabel(discipline) }}</h3>
 
-                <div class="scoring-table-wrap">
-                    <table class="scoring-table">
-                        <thead>
-                            <tr>
-                                <th class="col-competitor">Competitor</th>
-                                <th class="col-attempt">Attempt 1</th>
-                                <th class="col-attempt">Attempt 2</th>
-                                <th class="col-attempt">Attempt 3</th>
-                                <th class="col-best">Best</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (comp of ev.competitors; track comp.id) {
-                                <tr class="scoring-row">
-                                    <td class="cell-competitor">
-                                        <span class="comp-name">{{ comp.firstName }} {{ comp.lastName }}</span>
-                                        <span class="comp-meta">{{ comp.weightCategory }} · {{ comp.gender }}</span>
-                                    </td>
+        <div class="scoring-table-wrap">
+            <table class="scoring-table">
+                <thead>
+                    <tr>
+                        <th class="col-competitor">Competitor</th>
+                        <th class="col-attempt">Attempt 1</th>
+                        <th class="col-attempt">Attempt 2</th>
+                        <th class="col-attempt">Attempt 3</th>
+                        <th class="col-best">Best</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (comp of ev.competitors; track comp.id) {
+                    <tr class="scoring-row">
+                        <td class="cell-competitor">
+                            <span class="comp-name">{{ comp.firstName }} {{ comp.lastName }}</span>
+                            <span class="comp-meta">{{ comp.weightCategory }} · {{ comp.gender }}</span>
+                        </td>
 
-                                    @for (n of attemptNumbers; track n) {
-                                        @let attempt = getAttempt(comp.id, discipline, n);
-                                        <td
-                                            class="cell-attempt"
-                                            [class.cell-attempt--active]="isActiveSlot(comp.id, discipline, n)"
-                                            (click)="openSlot(comp, discipline, n)"
-                                        >
-                                            @if (attempt) {
-                                                <div class="attempt" [class]="'attempt--' + attempt.result.toLowerCase()">
-                                                    <span class="attempt__weight">{{ attempt.declaredWeight }} kg</span>
-                                                    <div class="attempt__lights">
-                                                        @for (d of attempt.decisions; track d.judgeId) {
-                                                            <span class="light" [class.light--valid]="d.valid" [class.light--invalid]="!d.valid"></span>
-                                                        }
-                                                    </div>
-                                                    <span class="attempt__badge attempt__badge--{{ attempt.result.toLowerCase() }}">{{ attempt.result }}</span>
-                                                </div>
-                                            } @else {
-                                                <div class="attempt attempt--empty">
-                                                    <span class="attempt__add">+</span>
-                                                </div>
-                                            }
-                                        </td>
+                        @for (n of attemptNumbers; track n) {
+                        @let attempt = getAttempt(comp.id, discipline, n);
+                        <td class="cell-attempt" [class.cell-attempt--active]="isActiveSlot(comp.id, discipline, n)"
+                            (click)="openSlot(comp, discipline, n)">
+                            @if (attempt) {
+                            <div class="attempt" [class]="'attempt--' + attempt.result.toLowerCase()">
+                                <span class="attempt__weight">{{ attempt.declaredWeight }} kg</span>
+                                <div class="attempt__lights">
+                                    @for (d of attempt.decisions; track d.judgeId) {
+                                    <span class="light" [class.light--valid]="d.valid"
+                                        [class.light--invalid]="!d.valid"></span>
                                     }
-
-                                    <td class="cell-best">
-                                        @let best = bestLift(comp.id, discipline);
-                                        @if (best !== null) {
-                                            <span class="best-lift">{{ best }} kg</span>
-                                        } @else {
-                                            <span class="best-lift best-lift--none">—</span>
-                                        }
-                                    </td>
-                                </tr>
-
-                                @if (hasActiveSlot(comp.id, discipline)) {
-                                    <tr class="slot-row">
-                                        <td colspan="5">
-                                            <div class="slot-panel">
-                                                <div class="slot-panel__fields">
-                                                    <label class="slot-field">
-                                                        <span>Weight (kg)</span>
-                                                        <input
-                                                            type="number"
-                                                            min="1"
-                                                            [ngModel]="activeSlot()!.weight"
-                                                            (ngModelChange)="updateSlotWeight($event)"
-                                                            placeholder="e.g. 85"
-                                                        />
-                                                    </label>
-                                                    <div class="slot-judges">
-                                                        <span class="slot-judges__label">Judge decisions</span>
-                                                        <div class="slot-judges__row">
-                                                            @for (d of activeSlot()!.decisions; track d.judgeId) {
-                                                                <button
-                                                                    type="button"
-                                                                    class="judge-btn"
-                                                                    [class.judge-btn--valid]="d.valid"
-                                                                    [class.judge-btn--invalid]="!d.valid"
-                                                                    (click)="toggleDecision(d.judgeId)"
-                                                                >
-                                                                    <span class="judge-btn__light"></span>
-                                                                    {{ d.judgeName }}
-                                                                </button>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="slot-panel__actions">
-                                                    <button type="button" class="slot-btn slot-btn--ghost" (click)="closeSlot()">Cancel</button>
-                                                    <button type="button" class="slot-btn slot-btn--primary" (click)="saveSlot()">Save</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
+                                </div>
+                                <span class="attempt__badge attempt__badge--{{ attempt.result.toLowerCase() }}">{{
+                                    attempt.result }}</span>
+                            </div>
+                            } @else {
+                            <div class="attempt attempt--empty">
+                                <span class="attempt__add">+</span>
+                            </div>
                             }
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        }
+                        </td>
+                        }
+
+                        <td class="cell-best">
+                            @let best = bestLift(comp.id, discipline);
+                            @if (best !== null) {
+                            <span class="best-lift">{{ best }} kg</span>
+                            } @else {
+                            <span class="best-lift best-lift--none">—</span>
+                            }
+                        </td>
+                    </tr>
+
+                    @if (hasActiveSlot(comp.id, discipline)) {
+                    <tr class="slot-row">
+                        <td colspan="5">
+                            <div class="slot-panel">
+                                <div class="slot-panel__fields">
+                                    <label class="slot-field">
+                                        <span>Weight (kg)</span>
+                                        <input type="number" min="1" [ngModel]="activeSlot()!.weight"
+                                            (ngModelChange)="updateSlotWeight($event)" placeholder="e.g. 85" />
+                                    </label>
+                                    <div class="slot-judges">
+                                        <span class="slot-judges__label">Judge decisions</span>
+                                        <div class="slot-judges__row">
+                                            @for (d of activeSlot()!.decisions; track d.judgeId) {
+                                            <button type="button" class="judge-btn" [class.judge-btn--valid]="d.valid"
+                                                [class.judge-btn--invalid]="!d.valid"
+                                                (click)="toggleDecision(d.judgeId)">
+                                                <span class="judge-btn__light"></span>
+                                                {{ d.judgeName }}
+                                            </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slot-panel__actions">
+                                    <button type="button" class="slot-btn slot-btn--ghost"
+                                        (click)="closeSlot()">Cancel</button>
+                                    <button type="button" class="slot-btn slot-btn--primary"
+                                        (click)="saveSlot()">Save</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    }
 
     } @else {
-        <div class="manager-loading">Loading event...</div>
+    <div class="manager-loading">Loading event...</div>
     }
 
 </div>
